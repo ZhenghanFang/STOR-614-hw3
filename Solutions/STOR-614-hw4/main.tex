@@ -1,0 +1,347 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+\input{head.tex}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\def\name{Zhenghan Fang}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\name}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\pagenumbering{arabic}
+
+\title{STOR 614 - Linear Programming, Spring 2019 \\
+Homework No. 4}
+\author{\name}
+
+\maketitle
+
+\noindent
+\textbf{Problem 1.}
+
+\noindent
+\textbf{(a)}
+
+Phase I.
+
+Add artificial variables $y_1,y_2$.
+\begin{equation*}
+  \begin{array}{cccccccc}
+    \text{max}& t= &          &   & &  -y_1 &  -y_2 &      \\ 
+    s.t       &    &    2x_1      &   + x_2 &    +x_3 &    +y_1 &             &  =4              \\
+              &    &    x_1      &    +x_2 &    +2x_3 &     &     +y_2        &  = 2          \\
+              &    &    x_1,      &    x_2, &    x_3, &    y_1, &     y_2        &  \ge 0          \\ 
+  \end{array}
+\end{equation*}
+
+Transform LP to canonical form.
+\begin{equation*}
+  \begin{array}{cccccccc}
+    \text{max}& t= &    3x_1      &+2x_2   & +3x_3 &  -6 &   &      \\ 
+    s.t       &    &    2x_1      &   + x_2 &    +x_3 &    +y_1 &             &  =4              \\
+              &    &    x_1      &    +x_2 &    +2x_3 &     &     +y_2        &  = 2          \\
+              &    &    x_1,      &    x_2, &    x_3, &    y_1, &     y_2        &  \ge 0          \\ 
+  \end{array}
+\end{equation*}
+
+The initial tableau is as follows
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    t &  x_1      &  x_2 &  x_3 &  y_1 & y_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    -3      &    -2 &    -3 &    0 & 0    & -6        &  t=-6              \\
+    0 &    2      &    1 &    1 &    1 &    0 & 4        &  y_1 = 4          \\
+    0 &    1      &    1 &    2 &    0 &    1 & 2        &  y_2 = 2          \\ \hline
+  \end{array}
+\end{equation*}
+
+First iteration: $x_1$ enters and $y_1$ leaves.
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    t &  x_1      &  x_2 &  x_3 &  y_1 & y_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &    -1/2 &    -3/2 &    3/2 & 0    & 0        &  t=0              \\
+    0 &    1      &    1/2 &    1/2 &    1/2 &    0 & 2        &  x_1 = 2          \\
+    0 &    0      &    1/2 &    3/2 &   -1/2 &    1 & 0        &  y_2 = 0          \\ \hline
+  \end{array}
+\end{equation*}
+
+Second iteration: $x_2$ enters and $y_2$ leaves.
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    t &  x_1      &  x_2 &  x_3 &  y_1 & y_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &    0   &    0     &    1   & 1    & 0        &  t=0              \\
+    0 &    1      &    0   &    -1    &    1   &   -1 & 2        &  x_1 = 2          \\
+    0 &    0      &    1   &    3     &   -1   &    2 & 0        &  x_2 = 0          \\ \hline
+  \end{array}
+\end{equation*}
+
+The optimal $t=0$. Case 2.1. Obtain a simplex tableau for the original LP.
+\begin{equation*}
+  \begin{array}{cccc|c|c}
+    \hline
+    z &  x_1      &  x_2   &  x_3       &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &    0   &    2       & 2            &  z=2              \\
+    0 &    1      &    0   &    -1      & 2            &  x_1 = 2          \\
+    0 &    0      &    1   &    3       & 0            &  x_2 = 0          \\ \hline
+  \end{array}
+\end{equation*}
+
+First iteration: $ x_3 $ enters and $ x_2 $ leaves.
+\begin{equation*}
+  \begin{array}{cccc|c|c}
+    \hline
+    z &  x_1      &  x_2   &  x_3       &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &  -2/3  &    0       & 2            &  z=2              \\
+    0 &    1      &  1/3   &    0       & 2            &  x_1 = 2          \\
+    0 &    0      &  1/3   &    1       & 0            &  x_3 = 0          \\ \hline
+  \end{array}
+\end{equation*}
+
+The original LP has an optimal solution $(x_1,x_2,x_3) = (2,0,0)$ and the optimal value is $z=2$.
+
+\noindent
+\textbf{(b)}
+
+Convert to standard form.
+\begin{equation*}
+  \begin{array}{ccccccc}
+    \text{min}& z= &    2x_1      &+3x_2   & &   &        \\ 
+    s.t       &    &    1/2x_1      &   + 1/4x_2 &    +s_1 &                 &  =4              \\
+              &    &    x_1      &    +3x_2 &     &   -s_2  &             = 20          \\
+              &    &    x_1      &    + x_2 &     &             &             = 10          \\
+              &    &    x_1,      &    x_2, &    s_1, &    s_2  &              \ge 0\\ 
+  \end{array}
+\end{equation*}
+
+Add artificial vriables $y_1, y_2$. The phase I LP is as follows.
+\begin{equation*}
+  \begin{array}{ccccccccc}
+    \text{max}& t= &          &   & &   & -y_1 & -y_2 &        \\ 
+    s.t       &    &    1/2x_1      &   + 1/4x_2 &    +s_1 &           &&      &  =4              \\
+              &    &    x_1      &    +3x_2 &     &   -s_2  &  +y_1&&           = 20          \\
+              &    &    x_1      &    + x_2 &     &             &  &+y_2&           = 10          \\
+              &    &    x_1,      &    x_2, &    s_1, &    s_2,  &  y_1,   & y_2 &         \ge 0\\ 
+  \end{array}
+\end{equation*}
+
+Convert phase I LP to canonical form.
+\begin{equation*}
+  \begin{array}{ccccccccc}
+    \text{max}& t= &    2x_1      & +4x_2  & & -s_2  & -30 &  &        \\ 
+    s.t       &    &    1/2x_1      &   + 1/4x_2 &    +s_1 &           &&      &  =4              \\
+              &    &    x_1      &    +3x_2 &     &   -s_2  &  +y_1&&           = 20          \\
+              &    &    x_1      &    + x_2 &     &             &  &+y_2&           = 10          \\
+              &    &    x_1,      &    x_2, &    s_1, &    s_2,  &   y_1,  & y_2 &         \ge 0\\ 
+  \end{array}
+\end{equation*}
+
+The initial tableau of phase I LP is as follows
+\begin{equation*}
+  \begin{array}{ccccccc|c|c}
+    \hline
+    t &  x_1      &  x_2   &  s_1 & s_2 & y_1 & y_2        &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    -2      &  -4  &    0       & 1  & 0 & 0 & -30          &  t=-30              \\
+    0 &    1/2      &  1/4  &    1       & 0  & 0 & 0 & 4          &  s_1=4              \\
+    0 &    1      &  3   &    0       & -1 & 1 & 0 & 20            &  y_1 = 20          \\
+    0 &    1      &  1   &   0       & 0    & 0 & 1 & 10        &  y_2 = 10          \\ \hline
+  \end{array}
+\end{equation*}
+
+First iteration: $x_1$ enters, $s_1$ leaves.
+\begin{equation*}
+  \begin{array}{ccccccc|c|c}
+    \hline
+    t &  x_1      &  x_2   &  s_1 & s_2 & y_1 & y_2        &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &  -3  &    4       & 1  & 0 & 0 & -14          &  t=-14              \\
+    0 &    1      &  1/2  &    2       & 0  & 0 & 0 & 8          &  x_1=8              \\
+    0 &    0      &  5/2   &    -2       & -1 & 1 & 0 & 12            &  y_1 = 12          \\
+    0 &    0      &  1/2   &   -2       & 0    & 0 & 1 & 2        &  y_2 = 2          \\ \hline
+  \end{array}
+\end{equation*}
+
+Second iteration: $x_2$ enters, $y_2$ leaves.
+\begin{equation*}
+  \begin{array}{ccccccc|c|c}
+    \hline
+    t &  x_1      &  x_2   &  s_1 & s_2 & y_1 & y_2        &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &  0  &    -8       & 1  & 0 & 6 & -2          &  t=-2              \\
+    0 &    1      &  0  &    4       & 0  & 0 & -1 & 6          &  x_1=6              \\
+    0 &    0      &  0   &    8       & -1 & 1 & -5 & 2            &  y_1 = 2          \\
+    0 &    0      &  1   &   -4       & 0    & 0 & 2 & 4        &  x_2 = 4          \\ \hline
+  \end{array}
+\end{equation*}
+
+Third iteration: $s_1$ enters, $y_1$ leaves.
+\begin{equation*}
+  \begin{array}{ccccccc|c|c}
+    \hline
+    t &  x_1      &  x_2   &  s_1 & s_2 & y_1 & y_2        &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &  0  &    0       & 0  & 1 & 1 & 0          &  t=0              \\
+    0 &    1      &  0  &    0       & 1/2  & -1/2 & 3/2 & 5          &  x_1=5              \\
+    0 &    0      &  0   &    1       & -1/8 & 1/8 & -5/8 & 1/4            &  s_1 = 1/4          \\
+    0 &    0      &  1   &  0      & -1/2    & 1/2 & -1/2 & 5        &  x_2 = 5          \\ \hline
+  \end{array}
+\end{equation*}
+
+The optimal $t=0$. Case 2.1. Obtain a simplex tableau for the original LP.
+\begin{equation*}
+  \begin{array}{ccccc|c|c}
+    \hline
+    z &  x_1      &  x_2   &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &  0  &    0       & -1/2  &  25          &  z=25              \\
+    0 &    1      &  0  &    0       & 1/2  &  5          &  x_1=5              \\
+    0 &    0      &  0   &    1      & -1/8 & 1/4            &  s_1 = 1/4          \\
+    0 &    0      &  1   &  0      & -1/2    & 5        &  x_2 = 5          \\ \hline
+  \end{array}
+\end{equation*}
+
+The curretn BFS is optimal. The optimal solution of the original LP is $(x_1,x_2) = (5,5)$ and the optimal value is $z=25$.
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 2.}
+
+\noindent
+\textbf{(a)}
+
+This problem is feasible if and only if there exists $k$ such that $b/a_k \ge 0$.
+\begin{proof}
+If there exists $k$ such that $b/a_k \ge 0$, then \{$ x_i = 0 \; (i \ne k)$, $x_k = b/a_k$\} is a feasible solution.
+
+If there doesn't exist $k$ such that $b/a_k \ge 0$, then for all $a_i \ne 0$, $b/a_i < 0$. Suppose $b>0$, then all $a_i \le 0$. Then $\sum_{i=1}^n a_ix_i \le 0 $, thus this problem is not feasible. If $b<0$, then $\sum_{i=1}^n a_ix_i \ge 0 $, and this problem is not feasible.
+\end{proof}
+
+\noindent
+\textbf{(b)}
+
+Let $K=\{i \mid b/a_i \ge 0\}$.
+The set of BFS's is $\{x_i = 0\;(i \ne k), x_k = b/a_k  \mid k\in K\}$. Thus the set of objective function values at BFS's is $\{c_k b / a_k  \mid k\in K\}$.
+
+ Find \[ p = \min_{i\in K} c_i b / a_i \] The optimal solution is $x_i = 0 \; (i\ne p), x_p = b/a_p$ and the optimal value is $c_pb/a_p$.
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 3.}
+
+Let $z$ be the BFS at a certain step. In each step, replace a basis of $z$ that is not a basis of $y$ by a basis of $y$ that is not a basis of $z$. In this way, the number of shared bases of $y$ and $z$ increases by 1 in each iteration. Thus we can go from $x$ to $y$ in a finite number of steps.
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 4.}
+
+\noindent
+Proposition 1. When formulating the phase I LP, if a non-artificial variable $x$ satisfies:
+\[\text{$x$ has coefficient 1 in an equation and zero coefficients in all the other equations. (condition 1)}\]
+then we do not need to add an artificial variable in the equation where $x$ has coefficient 1.
+
+When an artificial variable $y$ becomes nonbasic, a non-artificial variable becomes basic and satisfies condition 1. By proposition 1, we can formulate a new phase I LP without $y$. The new phase I LP is equivalent to the LP obtained by eliminating the column of $y$ from the old phase I LP.
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 5.}
+
+Use Matlab to solve the problems.
+
+\noindent
+\textbf{(a)} The problem is unbounded.
+
+\noindent
+\textbf{(b)} The optimal solution is $(0, 5, 0, 1, 0, 4)$ and the optimal value is $-74$.
+
+
+Matlab code for revised simplex method:
+\begin{lstlisting}
+%% LP (a)
+A=[ 0 1 2 1 1 0 -5;
+    0 2 1 0 -2 1 0;
+    1 1 -2 0 1 0 3];
+c = -[2;3;-4;3;1;-4;6];
+b = [2;1;3];
+B = [4 6 1];
+
+%% LP (b)
+A = [1 0 0 -1 1 1;
+     1 1 0 -1 3 0;
+     1 1 1 -3 0 1];
+c = -[14;-19;0;21;52;0];
+b = [3;4;6];
+B = [1 2 6];
+
+%% revised simplex method
+k=0;
+while(1)
+    N = setdiff(1:length(c), B);
+    k=k+1;
+    k
+    AB = A(:,B);
+    AB_inv = inv(AB);
+
+    reduced_cost = -c.' + c(B).'*AB_inv*A
+    coef_x = AB_inv*A
+    rhs_z=c(B).'*AB_inv*b
+    rhs_x=AB_inv*b
+
+    t = find(reduced_cost(N)<0);
+    if length(t) == 0
+        fprintf('found optimal value\n')
+        break
+    end
+    pivot_column = N(t(1));
+    u = AB_inv*A(:,pivot_column);
+    t = find(u>0);
+    if length(t) == 0
+        fprintf('unbounded\n')
+        break
+    end
+    [~,min_i] = min(rhs_x(t) ./ u(t));
+    pivot_row = t(min_i);
+    B(pivot_row) = pivot_column;
+end
+z=c(B).'*AB_inv*b;
+\end{lstlisting}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+
+\end{document}

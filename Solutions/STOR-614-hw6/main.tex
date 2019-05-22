@@ -1,0 +1,418 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+\input{head.tex}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\def\name{Zhenghan Fang}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\name}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\pagenumbering{arabic}
+
+\title{STOR 614 - Linear Programming, Spring 2019 \\
+Homework No. 6}
+\author{\name}
+
+\maketitle
+
+\noindent
+\textbf{Problem 1.}
+
+\noindent
+\textbf{(a)}
+
+Convert to standard form
+\begin{equation*}
+  \begin{array}{cccccccc}
+    \text{max}& z= &      -x_1    &   & -x_3 &  &   &      \\ 
+    s.t       &    &    -2x_1      &   - x_2 &    +x_3 &    +s_1 &             &  =-5              \\
+              &    &    -x_1      &    +2x_2 &    -2x_3 &     &     +s_2        &  = -2          \\
+              &    &    x_1,      &    x_2, &    x_3, &    s_1, &     s_2        &  \ge 0          \\ 
+  \end{array}
+\end{equation*}
+
+The initial tableau:
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    1      &    0 &    1 &    0 & 0    & 0        &  z=0              \\
+    0 &    -2      &    -1 &    1 &    1 &    0 & -5        &  s_1 = -5          \\
+    0 &    -1      &    2 &    -2 &    0 &    1 & -2        &  s_2 = -2          \\ \hline
+  \end{array}
+\end{equation*}
+
+Iteration 1: 
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    1      &    0 &    1 &    0 & 0    & 0        &  z=0              \\
+    0 &    -2      &    \boxed{-1} &    1 &    1 &    0 & -5        &  s_1 = -5          \\
+    0 &    -1      &    2 &    -2 &    0 &    1 & -2        &  s_2 = -2          \\ \hline
+    \text{ratio} &    1/2      &    0 &    NA &    NA &    NA &         &           \\ \hline
+  \end{array}
+\end{equation*}
+
+Dual BFS: (0,0)
+
+$s_1$ leaves and $x_2$ enters.
+
+
+Iteration 2: 
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    1      &    0 &    1 &    0 & 0    & 0        &  z=0              \\
+    0 &    2      &    1 &    -1 &    -1 &    0 & 5        &  x_2 = 5          \\
+    0 &    \boxed{-5}      &    0 &    0 &    2 &    1 & -12        &  s_2 = -12          \\ \hline
+    \text{ratio} &    1/5      &    NA &    NA &    NA &    NA &         &           \\ \hline
+  \end{array}
+\end{equation*}
+
+Dual BFS: (0,0)
+
+$s_2$ leaves and $x_1$ enters.
+
+Iteration 3:
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0      &    0 &    1 &    2/5 & 1/5    & -12/5        &  z=-12/5              \\
+    0 &    0      &    1 &    -1 &    -1/5 &    2/5 & 1/5        &  x_2 = 1/5          \\
+    0 &    1      &    0 &    0 &    -2/5 &    -1/5 & 12/5        &  x_1 = 12/5          \\ \hline
+    \text{ratio} &    1/5      &    NA &    NA &    NA &    NA &         &           \\ \hline
+  \end{array}
+\end{equation*}
+
+Dual BFS: (2/5,1/5)
+
+No leaving variable to choose.
+
+Terminate. $x=(12/5,1/5,0)$ is optimal, and the optimal value is -12/5.
+
+\noindent
+\textbf{(b)}
+
+Convert to standard form.
+\begin{equation*}
+  \begin{array}{ccccccccccc}
+    \text{max}& z= &    -3x_1      & -4x_2   & -2x_3 & -x_4   & -5x_5 & & &       \\ 
+    s.t       &    &    x_1      &   -2x_2 &    -x_3 & +x_4                 &  +x_5 & +s_1 & & & =-3              \\
+              &    &    -x_1      &   -x_2 &    -x_3 & +x_4                 &  +x_5 &  & +s_2 & & =-2              \\
+              &    &    x_1      &    + x_2 & -2x_3    & +2x_4    & -3x_5 & & & +s_3 &           = 4          \\
+              &    &    x_1,      &    x_2, & x_3, & x_4, & x_5, &   s_1, &    s_2  & s_3 &             \ge 0\\ 
+  \end{array}
+\end{equation*}
+
+The initial tableau:
+\begin{equation*}
+  \begin{array}{ccccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 & x_4 & x_5 & s_1 & s_2 & s_3 &  \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    3      &    4 &    2 &    1 & 5    & 0 & 0 & 0 &     0  &  z=0              \\
+    0 &    1      &    -2 &    -1 &    1 &    1 & 1 & 0 & 0 & -3      &  s_1 = -3          \\
+    0 &    -1      &    -1 &    -1 &    1 &    1 & 0 & 1 & 0 & -2   &  s_2 = -2          \\ 
+    0 &    1      &    1 &    -2 &    2 &    -3 & 0 & 0 & 1 & 4   &  s_3 = 4          \\ \hline
+  \end{array}
+\end{equation*}
+
+Iteration 1: 
+\begin{equation*}
+  \begin{array}{ccccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 & x_4 & x_5 & s_1 & s_2 & s_3 &  \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    3      &    4 &    2 &    1 & 5    & 0 & 0 & 0 &     0  &  z=0              \\
+    0 &    1      &    -2 &    \boxed{-1} &    1 &    1 & 1 & 0 & 0 & -3      &  s_1 = -3          \\
+    0 &    -1      &    -1 &    -1 &    1 &    1 & 0 & 1 & 0 & -2   &  s_2 = -2          \\ 
+    0 &    1      &    1 &    -2 &    2 &    -3 & 0 & 0 & 1 & 4   &  s_3 = 4          \\ \hline
+    \text{ratio} &    NA      &    2 &    2 &    NA &    NA & NA & NA & NA                    \\ \hline
+  \end{array}
+\end{equation*}
+
+Dual BFS: (0,0,0)
+
+$s_1$ leaves and $x_3$ enters.
+
+Iteration 2: 
+\begin{equation*}
+  \begin{array}{ccccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 & x_4 & x_5 & s_1 & s_2 & s_3 &  \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    5      &    0 &    0 &    3 & 7    & 2 & 0 & 0 &     -6  &  z=-6              \\
+    0 &    -1      &    2 &    1 &    -1 &    -1 & -1 & 0 & 0 & 3      &  x_3 = 3          \\
+    0 &    -2      &    1 &    0  &    0 &    0 & -1 & 1 & 0 & 1   &  s_2 = 1          \\ 
+    0 &    -1      &    5 &    0 &    0 &    -5 & -2 & 0 & 1 & 10   &  s_3 = 10          \\ \hline
+    \text{ratio} &    NA      &    2 &    2 &    NA &    NA & NA & NA & NA                    \\ \hline
+  \end{array}
+\end{equation*}
+
+Dual BFS: (2,0,0)
+
+No leaving variable to choose.
+
+Terminate. $x=(0,0,3,0,0)$ is optimal. The optimal value is -6.
+
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 2.}
+\begin{proof}
+If (a) holds, then (b) cannot hold, because
+\[ p^T A >0, x\ge0, x\ne0 \implies p^T Ax > 0, \] which contradicts with $Ax=0$.
+
+Suppose that (a) does not hold. Let $ \bm{1} = \begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}$. Consider the pair
+\begin{equation*}
+  \begin{array}{llllllll}
+    \text{Primal:} &\text{max}& \bm{1}^Tx &          &   & \text{Dual:} & \text{min} & 0       \\ 
+    & s.t       &  Ax=0  &          & &&  s.t  &   p^T A \ge \bm{1}           \\
+    &           & x\ge 0   &         
+  \end{array}
+\end{equation*}
+The primal has a unique optimal solution $x=0$ and the optimal value is 0. Then the dual is feasible, so there exists $p$ such that $p^TA \ge \bm{1} > 0$. 
+\end{proof}
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 3.}
+\begin{proof}
+If (b) holds, then \[a^Tx \le \sum_{i=1}^m \lambda_i a_i^Tx \le \sum_{i=1}^m \lambda_i (\max_{i=1,...,m} a_i^Tx) = \max_{i=1,...,m} {a_i^Tx} \] for any $x\ge0$.
+
+Suppose that (a) holds. Consider the pair
+\begin{equation*}
+  \begin{array}{llllllll}
+    \text{Primal:} &\text{max}& a^Tx &          &   & \text{Dual:} & \text{min} & \sum_{i=1}^m p_i       \\ 
+    & s.t       &  a_i^Tx\le1,\quad i=1,...,m  &          & &&  s.t  &   \sum_{i=1}^m p_ia_i \ge a           \\
+    &           & x\ge 0   &  & & & & p_i \ge 0, \quad i=1,...,m      
+  \end{array}
+\end{equation*}
+The primal is not infeasible ($x=0$ is a trivial feasible solution). Thus, the primal has an optimal solution and the optimal value is bounded by $1$. Thus, the optimal value of the dual is $\le 1$. Thus, there exist coefficients $p_i$'s, such that
+\begin{gather*}
+    \sum_{i=1}^m p_i \le 1, \\
+    \sum_{i=1}^m p_ia_i \ge a, \\ \tag{3.1}
+    p_i \ge 0, \quad i=1,...,m.
+\end{gather*}
+
+Furthermore, consider the pair
+\begin{equation*}
+  \begin{array}{llllllll}
+    \text{Primal:} &\text{max}& a^Tx &          &   & \text{Dual:} & \text{min} & \sum_{i=1}^m -q_i       \\ 
+    & s.t       &  a_i^Tx\le -1,\quad i=1,...,m  &          & &&  s.t  &   \sum_{i=1}^m q_ia_i \ge a           \\
+    &           & x\ge 0   &  & & & & q_i \ge 0, \quad i=1,...,m      
+  \end{array} 
+\end{equation*}
+If the primal is infeasible, then the dual is unbounded (dual cannot be infeasible because of (3.1)). If the primal is feasible, then the primal optimal value is $\le -1$. Therefore, either way, there exist coefficients $q_i$'s, such that 
+\begin{gather*}
+    \sum_{i=1}^m -q_i \le -1 \implies \sum_{i=1}^m q_i \ge 1, \\
+    \sum_{i=1}^m q_ia_i \ge a, \\ \tag{3.2}
+    q_i \ge 0, \quad i=1,...,m.
+\end{gather*}
+
+From (3.1) and (3.2), and that the feasible set of dual problem is convex, we get statement (b).
+\end{proof}
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 4.}
+
+(a) The optimal solution is $(0,25,25,0,0)$. The optimal objective function value is 300.
+
+(b) The dual LP:
+\begin{equation*}
+  \begin{array}{cccccccc}
+    \text{min}&    &      50y_1    & +100y_2  &       \\ 
+    s.t       &    &    y_1      &   +2y_2 &    \ge 3      \\
+              &    &    y_1      &    +3y_2 &   \ge 7        \\
+              &    &    y_1      &    +y_2 &   \ge 5   \\ 
+              &    &    y_1      &        &   \ge 0  \\ 
+              &    &          &   y_2     &   \ge 0  \\ 
+  \end{array}
+\end{equation*}
+
+A dual optimal solution is $(y_1,y_2) = (4,1)$. The dual has only one optimal solution, because the primal LP has a nondegenerate optimal BFS.
+
+(c) The reduced cost for $x_1$ will be $3-\Delta$. For $\Delta \le 3$, $\{x_3,x_2\}$ continues to be an optimal basis. For $\Delta \le 3$, an optimal solution is $(0,25,25)$, and the optimal value is 300. For $\Delta = 4$, the tableau is
+\begin{equation*}
+  \begin{array}{cccccc|c|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var} & \text{ratio}  \\ \hline
+    1 &    -1     &    0 &    0 &    4 & 1    & 300        &  z=300              \\
+    0 &    0.5      &    0 &    1 &    1.5 &    -0.5 & 25        &  x_3 = 25   & 50       \\
+    0 &    0.5      &    1 &    0 &    -0.5 &    0.5 & 25        &  x_2 = 25    & 50      \\ \hline
+  \end{array}
+\end{equation*}
+
+$x_1$ enters and $x_3$ leaves.
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}  \\ \hline
+    1 &    0     &    0 &    2 &    7 & 0    & 350        &  z=350              \\
+    0 &    1      &    0 &    2 &    3 &    -1 & 50        &  x_1 = 50    \\
+    0 &    0      &    1 &    -1 &    -2 &    1 & 0        &  x_2 = 0      \\ \hline
+  \end{array}
+\end{equation*}
+
+An optimal solution is $(50,0,0,0,0)$, and the optimal value is 350.
+
+(d)
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    3     &    0 &    -\Delta &    4-\Theta & 1    & 300        &  z=300              \\
+    0 &    0.5      &    0 &    1 &    1.5 &    -0.5 & 25        &  x_3 = 25         \\
+    0 &    0.5      &    1 &    0 &    -0.5 &    0.5 & 25        &  x_2 = 25          \\ \hline
+  \end{array}
+\end{equation*}
+
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    3 +0.5\Delta     &    0 &    0 &    4-\Theta +1.5\Delta & 1-0.5\Delta    & 300 +25\Delta       &  z=300+25\Delta           \\
+    0 &    0.5      &    0 &    1 &    1.5 &    -0.5 & 25        &  x_3 = 25         \\
+    0 &    0.5      &    1 &    0 &    -0.5 &    0.5 & 25        &  x_2 = 25          \\ \hline
+  \end{array}
+\end{equation*}
+For the current basis to remain optimal, we need
+\begin{align*}
+    & 3 +0.5\Delta \ge 0\\
+    & 4-\Theta +1.5\Delta \ge 0 \\
+    & 1-0.5\Delta \ge 0
+\end{align*}
+Thus, for $-6 \le \Delta \le 2$ and $\Theta \le 4+1.5\Delta$, this tableau shows an optimal solution. Optimal solution: $(0,25,25,0,0)$, optimal value: $300+25\Delta$. $(\Delta,\Theta) = (2,2)$ belongs to that range.
+
+(e)
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    3     &    0 &    0 &    4 & 1    & 300+4\Delta       &  z=300+4\Delta              \\
+    0 &    0.5      &    0 &    1 &    1.5 &    -0.5 & 25+1.5\Delta        &  x_3 = 25+1.5\Delta         \\
+    0 &    0.5      &    1 &    0 &    -0.5 &    0.5 & 25-0.5\Delta        &  x_2 = 25-0.5\Delta           \\ \hline
+  \end{array}
+\end{equation*}
+For the current basis to remain optimal, we need
+\begin{align*}
+    & 25+1.5\Delta \ge 0 \\
+    & 25-0.5\Delta \ge 0
+\end{align*}
+Thus, for $-50/3 \le \Delta \le 50$, the current basis continue to be optimal. The optimal value is $300+4\Delta$. When $\Delta = 100$,
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    3     &    0 &    0 &    4 & 1    & 700       &  z=700              \\
+    0 &    0.5      &    0 &    1 &    1.5 &    -0.5 & 175        &  x_3 = 175         \\
+    0 &    0.5      &    1 &    0 &    -0.5 &    0.5 & -25        &  x_2 = -25           \\ \hline
+  \end{array}
+\end{equation*}
+$x_2$ leaves and $s_1$ enters.
+\begin{equation*}
+  \begin{array}{cccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  s_1 & s_2 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    7     &    8 &    0 &    0 & 5    & 500       &  z=500              \\
+    0 &    2      &    3 &    1 &    0 &    1 & 100        &  x_3 = 100         \\
+    0 &    -1      &    -2 &    0 &    1 &    -1 & 50        &  s_1 = 50           \\ \hline
+  \end{array}
+\end{equation*}
+An optimal solution is $(0,0,100,50,0)$, and the optimal value is $500$.
+
+\vspace{\baselineskip}
+\noindent
+\textbf{Problem 5.}
+
+(a) Basis: $\{x_1,x_6,x_3\}$. $A_B =\begin{bmatrix}6 & 0 & 5 \\ 3 & 1 & 3 \\ 3 & 0 & 5\end{bmatrix} $. $A_B^{-1} = \begin{bmatrix}1/3 & 0 & -1/3 \\ -2/5 & 1 & -1/5 \\ -1/5 & 0 & 2/5\end{bmatrix}$. $c_B=\begin{bmatrix}3 \\ 0 \\ 4\end{bmatrix}$. BFS: $(5/3,0,3,0,0,1,0)$. Objective function value = 17.
+
+(b) The largest value is 3. The optimal value is 17. If $x_4,x_5,x_7$ are zero, the optimal value is reached. Thus the set of optimal solutions is $\{\begin{bmatrix}1/3\lambda+5/3 \\ \lambda \\3-\lambda \\0 \\ 0 \\1 \\0 \end{bmatrix} \mid 0 \le \lambda \le 3\}$.
+
+(c)
+If the coefficient of $x_3$ is $4+\Delta$, the tableau will be
+\begin{equation*}
+  \begin{array}{cccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  x_4 & x_5 & x_6 & x_7 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    0     &    2 &    -\Delta &    1 & 1/5    & 0 & 3/5 & 17      &  z=17              \\
+    0 &    1      &    -1/3 &    0 &    2/3 &    1/3 & 0 & -1/3 & 5/3        &  x_3 = 175         \\
+    0 &    0      &    0 &    0 &    -1 &    -2/5 & 1 & -1/5 & 1       &  x_2 = -25           \\
+    0 &    0      &    1 &    1 &    0 &    -1/5 & 0 & 2/5 & 3       &  x_2 = -25           \\ \hline
+  \end{array}
+\end{equation*}
+
+\begin{equation*}
+  \begin{array}{cccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  x_4 & x_5 & x_6 & x_7 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    0     &    2+\Delta &    0 &    1 & 1/5 - 1/5\Delta    & 0 & 3/5+2/5\Delta & 17+\Delta      &  z=17+\Delta              \\
+    0 &    1      &    -1/3 &    0 &    2/3 &    1/3 & 0 & -1/3 & 5/3        &  x_3 = 175         \\
+    0 &    0      &    0 &    0 &    -1 &    -2/5 & 1 & -1/5 & 1       &  x_2 = -25           \\
+    0 &    0      &    1 &    1 &    0 &    -1/5 & 0 & 2/5 & 3       &  x_2 = -25           \\ \hline
+  \end{array}
+\end{equation*}
+Thus, the smallest value is $4-1.5=2.5$. The optimal value is $15.5$. The optimal value is reached if $x_2,x_4,x_5=0$. Thus, the set of optimal solutions is $\{\begin{bmatrix}  1/3\lambda+5/3 \\ 0 \\ -2/5\lambda+3 \\ 0 \\ 0 \\ 1/5\lambda+1 \\ \lambda \end{bmatrix}\mid 0\le\lambda\le 5/2\}$.
+
+(d) If the value is $25+\Delta$, the tableau will be
+\begin{equation*}
+  \begin{array}{cccccccc|c|c}
+    \hline
+    z &  x_1      &  x_2 &  x_3 &  x_4 & x_5 & x_6 & x_7 &   \text{rhs} & \text{Basic var}   \\ \hline
+    1 &    0     &    2 &   0 &    1 & 1/5    & 0 & 3/5 & 17+1/5\Delta      &  z=17              \\
+    0 &    1      &    -1/3 &    0 &    2/3 &    1/3 & 0 & -1/3 & 5/3+1/3\Delta        &  x_3 = 175         \\
+    0 &    0      &    0 &    0 &    -1 &    -2/5 & 1 & -1/5 & 1-2/5\Delta       &  x_2 = -25           \\
+    0 &    0      &    1 &    1 &    0 &    -1/5 & 0 & 2/5 & 3-1/5\Delta       &  x_2 = -25           \\ \hline
+  \end{array}
+\end{equation*}
+Thus, the largest value is $27.5$. The new optimal basis will be $\{x_1,x_5,x_3\}$.
+
+(e) Because the dual optimal solution is $(1/5,0,3/5)$, the rate of change of the primal optimal value in response to a change in the largest value of resource 1, 2, 3 are $1/5,0,3/5$, respectively. Thus, if we purchase $n$ packages of resources, the primal optimal value increases by $3n\times1/5 + 4n\times3/5 = 3n$, and the cost increases by $5n$. The increase of cost is greater than the increase of earnings, so we should not purchase any of this package.
+
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+
+\end{document}

@@ -1,0 +1,141 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+\input{head.tex}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\def\name{Zhenghan Fang}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\name}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\pagenumbering{arabic}
+
+\title{STOR 614 - Linear Programming, Spring 2019 \\
+Homework No. 8}
+\author{\name}
+
+\maketitle
+
+\noindent
+\textbf{Problem 1.}
+
+(1) \[ Ad^* = -A_B A_B^{-1} A_j + A_j = 0. \]
+
+(2) \[c^Td^* = -c_B^T A_B^{-1} A_j + c_j = -(c_B^T A_B^{-1} A_j - c_j) >0 \]
+because the reduced cost of $x_j$ is $c_B^T A_B^{-1} A_j - c_j$ and is negative.
+
+(3) The matrix
+\[\begin{bmatrix} A_B & D \\ 0 & I_{n-m-1} \end{bmatrix} \in \mathbb{R}^{(n-1)\times(n-1)}\]
+is nonsingular because $A_B$ is nonsingular. Thus, the matrix with the active constraints of $d^*$ as row vectors has $n-1$ linearly independent columns. Thus, $d^*$ has $n-1$ linearly independent active constraints.
+
+\noindent
+\textbf{Problem 2.}
+
+For any $x, y\in \mathbb{R}^n$ and $0 \le t \le 1$,
+\begin{align*}
+    F[(1-t) x+ty] & = g\{f[(1-t) x+ty]\} \\
+    & \le g[(1-t)f(x)+tf(y)] \quad \text{($f$ is convex and $g$ is nondecreasing)} \\
+    & \le (1-t)g(f(x)) + tg(f(y)) \quad \text{($g$ is convex)}\\
+    & = (1-t)F(x) + tF(y)
+\end{align*}
+Thus, $F$ is convex.
+
+\noindent
+\textbf{Problem 3.}
+
+\noindent
+\textbf{(a)}
+
+First, we have
+\[M = \begin{bmatrix} 2&0\\0&8 \end{bmatrix}, c= \begin{bmatrix} -8\\-16 \end{bmatrix}, A=\begin{bmatrix} -1&-1\\-1&0\\1&0\\0&1 \end{bmatrix},b=\begin{bmatrix} -5\\-3\\0\\0 \end{bmatrix}.\]
+
+The matrix $M$ is positive definite.
+
+The point $(3,2)$ satisfies the first two constraints as equalities and the last two strictly. So the multipliers would need to satisfy $u_1\ge 0,u_2\ge0,u_3=0,u_4=0$. The equation $Mx+c=A^Tu$ becomes 
+\[\begin{bmatrix}-2\\0\end{bmatrix} = \begin{bmatrix} -1&-1&1&0\\-1&0&0&1 \end{bmatrix} \begin{bmatrix} u_1\\u_2\\0\\0 \end{bmatrix}\]
+which gives $u_1=0$ and $u_2=2$. Therefore there exists $u\in \mathbb{R}^4$ such that $(x,u)$ satisfies all the KKT conditions. $x = (3, 2)$ is a global
+solution.
+
+$M$ is positive definite, thus $z$ is strictly convex, thus the QP has a unique global solution.
+
+
+\noindent
+\textbf{(b)}
+
+First, we have 
+\[M = \begin{bmatrix} 1&-1\\-1&2 \end{bmatrix}, c= \begin{bmatrix} -2\\-6 \end{bmatrix}, A=\begin{bmatrix} -1&-1\\1&-2\\-2&-1\\1&0\\0&1 \end{bmatrix},b=\begin{bmatrix} -2\\-2\\-3\\0\\0 \end{bmatrix}.\]
+
+The matrix $M$ is positive definite. 
+The point $(2/3,4/3)$ satisfies the first two constraints as equalities and the last three strictly. So the multipliers would need to satisfy $u_1\ge0,u_2\ge0,u_3=0,u_4=0,u_5=0$. The equation $Mx+c=A^Tu$ becomes 
+\[\begin{bmatrix}-8/3\\-4\end{bmatrix} = \begin{bmatrix} -1&1&-2&1&0\\-1&-2&-1&0&1 \end{bmatrix} \begin{bmatrix} u_1\\u_2\\0\\0\\0 \end{bmatrix}\]
+which gives $u_1=28/9,u_2=4/9$. Therefore there exists $u\in \mathbb{R}^5$ such that $(x,u)$ satisfies all the KKT conditions. $x = (2/3, 4/3)$ is a global solution.
+
+$M$ is positive definite, thus $z$ is strictly convex, thus the QP has a unique global solution.
+
+\noindent
+\textbf{Problem 4.}
+
+\begin{align*}
+    \text{min}\quad & \frac{1}{2}x^Tx \\
+    \text{s.t.}\quad & a^Tx+\alpha \ge 0
+\end{align*}
+
+We have \[M=I_n, c=0, A=a^T, b=-\alpha\]. The KKT conditions state that
+\begin{align*}
+\begin{cases}
+    I_nx=au \\
+    a^Tx+\alpha \ge 0 \\
+    u \ge 0 \\
+    (a^Tx+\alpha)u=0
+\end{cases}
+\end{align*}
+
+If $\alpha \ge 0$, then $u=0, x=0$. The optimal solution is $x=0$, and the optimal value is $0$.
+
+If $\alpha < 0$, then $a^Tx+\alpha = a^Tau+\alpha = 0 \implies u=-\alpha/(a^Ta)$ (assume $a\ne 0$). The optimal solution is \[x=au = -\frac{\alpha} {a^Ta}a,\] and the optimal value is \[\frac{1}{2}x^Tx = \frac{1}{2} \alpha^2/(a^Ta).\]
+
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+
+\end{document}

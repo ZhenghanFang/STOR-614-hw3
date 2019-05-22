@@ -1,0 +1,115 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+\input{head.tex}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\def\name{Zhenghan Fang}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\name}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\pagenumbering{arabic}
+
+\title{STOR 614 - Linear Programming, Spring 2019 \\
+Homework No. 7}
+\author{\name}
+
+\maketitle
+
+\noindent
+\textbf{Problem 1.}
+
+By Theorem 4 in Lecture Notes 14, for any $b\in B$, the LP has an optimal solution if and only if there does not exist an extreme ray $d$ of the feasible set such that $c^Td<0$. Since changing $b$ does not change the extreme rays of the feasible set of LP, the LP has an optimal solution for each $b \in B$.
+
+\noindent
+\textbf{Problem 2.}
+
+\noindent
+\textbf{(a)}
+
+By definition, \[f(b) \ge (y^{*})^Tb,\] \[f(b^*) = (y^{*})^Tb^*.\] 
+
+Thus, \[f(b) - f(b^*) \ge (y^{*})^T(b-b^*).\]
+
+\noindent
+\textbf{(b)}
+
+For any $x\ge0$, let $b=Ax$. Then,
+\[c^Tx \ge f(b) \ge f(b^*) + (y^{*})^T(b-b^*) = f(b^*) + (y^{*})^TAx - (y^{*})^Tb^* \tag{1} \]
+
+Since the dual feasible set is nonempty, $f(b^*) > -\infty$.
+
+From Equ. (1), 
+\begin{align*}
+    & c^Tx - (y^{*})^TAx \ge f(b^*) - (y^{*})^Tb^* > -\infty \text{, for all~} x \ge 0 \\ 
+    \implies & c^T - (y^{*})^TA \ge 0 
+\end{align*}
+i.e., $y^{*}$ is a dual feasible solution. Thus, $f(b^*) \ge (y^{*})^Tb^*$.
+
+Take $x=0$ in Equ. (1), we get $f(b^*) \le (y^{*})^Tb^*$.
+
+Thus, $f(b^*) = (y^{*})^Tb^*$, i.e., $y^*$ is a dual optimal solution
+at $b=b^*$.
+
+\noindent
+\textbf{Problem 3.}
+
+\noindent
+\textbf{(a)}
+
+Extreme points: $(0,4)$.
+
+Extreme rays: $(1,-2)$, $(0,1)$.
+
+\noindent
+\textbf{(b)}
+
+Extreme points: none.
+
+Extreme rays: $(1,-2)$, $(-1,2)$.
+
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+
+\end{document}
